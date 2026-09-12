@@ -1,0 +1,10 @@
+{
+  "provider": {
+    "go2llm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "go2llm",
+      "options": { "baseURL": "https://go2llm.tech/v1" },
+      "models": { "claude-sonnet-5": {}, "gpt-5.6-sol": {} }
+    }
+  }
+}
