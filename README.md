@@ -300,16 +300,6 @@ claude-code/  setup.sh
 opencode/     opencode.json
 ```
 
-## Standalone snippets
-
-Single-file answers to the problems people hit first. Each one runs on its own
-and works against any compatible endpoint, not only ours.
-
-- [429 `rate_limit_error`: Retry-After before backoff, with full jitter](https://gist.github.com/ev-mironov/798e9f5cb57a756719d48faac1ad43c4)
-- [401 `authentication_error` / `invalid x-api-key`: separate the six causes](https://gist.github.com/ev-mironov/aeb46e8c2c5eae909a0c39dbf0b7b60e)
-- [n8n: importable HTTP Request workflow, because the OpenAI node has no Base URL field](https://gist.github.com/ev-mironov/67adba860b083d668f80d74e4ac7e27e)
-- [Custom base URL in Claude Code, OpenCode, Zed, Continue.dev, Roo/Kilo Code, Open WebUI](https://gist.github.com/ev-mironov/c29b1c07696f482d8e60e003986f7f31)
-
 ## Links
 
 - Site: https://go2llm.tech
