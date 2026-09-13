@@ -213,44 +213,34 @@ Anthropic Messages client (Claude Code) instead.
 
 ## Pricing
 
-USD per 1M tokens. `in` = input and cache writes, `out` = output,
-`cache` = cache reads. Catalog v19, 2026-09-11 — **check
-`GET /api/pricing` for the live numbers.**
+There used to be a price table here. It went stale, quoted four model IDs that
+no longer exist, and understated several real prices — which is exactly what a
+hand-maintained table does between edits. Read the catalogue instead:
 
-| Model | in | out | cache | Vendor's own rate (in/out/cache) |
-|---|---|---|---|---|
-| `claude-opus-5` | 0.50 | 2.50 | 0.05 | 5.00 / 25.00 / 0.50 |
-| `claude-sonnet-5` | 0.30 | 1.50 | 0.03 | 3.00 / 15.00 / 0.30 |
-| `claude-haiku-4-5` | 0.15 | 0.75 | 0.015 | 1.00 / 5.00 / 0.10 |
-| `gpt-6-astra` | 1.50 | 7.50 | 0.15 | 10.00 / 50.00 / 1.00 |
-| `gpt-5.6-sol` | 0.40 | 2.00 | 0.04 | 4.00 / 20.00 / 0.40 |
-| `gpt-5.6-luna` | 0.04 | 0.24 | 0.004 | 0.20 / 1.20 / 0.02 |
-| `gpt-5.3-codex` | 0.525 | 4.20 | 0.0525 | 1.75 / 14.00 / 0.175 |
-| `gemini-3.8-flash` | 0.15 | 0.75 | 0.015 | 0.75 / 3.75 / 0.075 |
-| `grok-4.6` | 0.20 | 0.60 | 0.05 | 2.00 / 6.00 / 0.50 |
-| `deepseek-v4-flash` | 0.033 | 0.099 | 0.00105 | 0.22 / 0.66 / 0.007 |
-| `kimi-k3` | 0.30 | 1.50 | 0.03 | 3.00 / 15.00 / 0.30 |
-| `glm-5.3` | 0.14 | 0.44 | 0.026 | 1.40 / 4.40 / 0.26 |
-| `qwen3.8-max` | 0.165 | 0.4951 | 0.0137 | 1.65 / 4.951 / 0.137 |
+```bash
+./python/pricing_table.py              # every published model, cheapest blended first
+./python/pricing_table.py anthropic    # filter by family or model id
+```
 
-38 models are published in total, plus image models (`gpt-image-2`,
-`nano-banana-2`, `nano-banana-pro`, `gemini-3.1-flash-image`,
-`grok-imagine-image`) billed per image rather than per token. Full list:
-`GET /v1/models`.
+The script needs no key and no dependencies, and it prints the catalogue version
+and timestamp it read, so you always know how fresh the answer is. The raw
+document is `GET /api/pricing`; image models appear there too, billed per image
+rather than per token.
 
-### How to compare these numbers properly
+### How to compare the numbers properly
 
-A coding agent's billed token profile is roughly 10% input, 5% output,
-85% cache reads, because the agent resubmits its whole context every turn.
-So the number that matters is the blended price:
+A coding agent's billed token profile is roughly 10% input, 5% output, 85% cache
+reads, because the agent resubmits its whole context every turn. So the number
+that decides your bill is the blended price, not the input column:
 
 ```
 blended = in × 0.10 + out × 0.05 + cache × 0.85
 ```
 
-For `claude-opus-5` at the vendor rate that is $2.175 per 1M — of which
-**57.5% is output** and only 23.0% is input. Comparing providers on the input
-column alone will give you the wrong answer.
+`pricing_table.py` sorts by exactly that, using the weights the catalogue itself
+publishes in `comparisonProfile` — so the ranking you see is the ranking the
+gateway used, not one we invented for the README. A provider that looks cheapest
+on input alone routinely lands mid-table once cache reads are counted.
 
 ## Billing behavior
 
@@ -303,7 +293,7 @@ the model has already started producing output.
 ```
 curl/         anthropic-messages.sh, openai-chat-completions.sh,
               list-models.sh, images.sh
-python/       openai_sdk.py, anthropic_sdk.py
+python/       openai_sdk.py, anthropic_sdk.py, pricing_table.py
 typescript/   streaming.ts
 javascript/   anthropic.js
 claude-code/  setup.sh
