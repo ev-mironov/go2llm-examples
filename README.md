@@ -301,12 +301,24 @@ the model has already started producing output.
 ## Repository layout
 
 ```
-python/     OpenAI SDK, Anthropic SDK, streaming, cost logging
-js/         OpenAI SDK, Anthropic SDK, streaming
-curl/       messages.sh, chat_completions.sh, models.sh, images.sh
-opencode/   opencode.json
-docs/       errors.md, pricing-math.md
+curl/         anthropic-messages.sh, openai-chat-completions.sh,
+              list-models.sh, images.sh
+python/       openai_sdk.py, anthropic_sdk.py
+typescript/   streaming.ts
+javascript/   anthropic.js
+claude-code/  setup.sh
+opencode/     opencode.json
 ```
+
+## Standalone snippets
+
+Single-file answers to the problems people hit first. Each one runs on its own
+and works against any compatible endpoint, not only ours.
+
+- [429 `rate_limit_error`: Retry-After before backoff, with full jitter](https://gist.github.com/ev-mironov/798e9f5cb57a756719d48faac1ad43c4)
+- [401 `authentication_error` / `invalid x-api-key`: separate the six causes](https://gist.github.com/ev-mironov/aeb46e8c2c5eae909a0c39dbf0b7b60e)
+- [n8n: importable HTTP Request workflow, because the OpenAI node has no Base URL field](https://gist.github.com/ev-mironov/67adba860b083d668f80d74e4ac7e27e)
+- [Custom base URL in Claude Code, OpenCode, Zed, Continue.dev, Roo/Kilo Code, Open WebUI](https://gist.github.com/ev-mironov/c29b1c07696f482d8e60e003986f7f31)
 
 ## Links
 
@@ -314,6 +326,8 @@ docs/       errors.md, pricing-math.md
 - Docs: https://go2llm.tech/docs
 - Pricing: https://go2llm.tech/pricing
 - Status: https://go2llm.tech/status
+- Error reference: https://go2llm.tech/en/errors
+- Client setup guides: https://go2llm.tech/tools
 - Support: support@go2llm.tech · Telegram `@go2llm_support`
 
 ## License
